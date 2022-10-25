@@ -4,7 +4,8 @@ import gc
 import pprint
 import yaml
 import wandb
-os.environ["WANDB_DIR"] = '/home/eugenie/projects/def-rachelpo/eugenie/' # Set wandb dir
+
+# os.environ["WANDB_DIR"] = os.environ["fork_home"] # Set wandb dir
 # Ignore warnings
 import warnings
 warnings.filterwarnings('ignore')
@@ -14,7 +15,9 @@ Training pipeline functions, integrating wandb
 '''
 
 # Load yaml file with arg
-setup_config = os.path.join('/home/eugenie/projects/def-rachelpo/eugenie/queryteller/scripts/configs/seq2seq/', sys.argv[1])
+qt_home = os.environ['queryteller_home']
+setup_config = os.path.join(qt_home, "scripts/configs/seq2seq/", "cnn.yaml")
+print(setup_config)
 with open(setup_config) as f:
 	setup_config = yaml.safe_load(f)
 setup = setup_config['setup']
@@ -23,11 +26,13 @@ hp_constant = setup_config['constant']
 hp_constant['architecture']['value'] = setup['architecture']
 
 # Load setup yaml file to update configuration
-setup_config = os.path.join('/home/eugenie/projects/def-rachelpo/eugenie/queryteller/scripts/configs/seq2seq/setup.yaml')
+setup_config = os.path.join(qt_home, "scripts/configs/seq2seq/", "setup.yaml")
 with open(setup_config) as f:
 	setup_config = yaml.safe_load(f)
 setup.update(setup_config['setup'])
 hp_constant.update(setup_config['constant'])
+
+print(setup_config)
 
 # Imports based on the yaml configuration
 sys.path.append(setup['scripts_dir'])
@@ -65,7 +70,7 @@ def model_pipeline(config=None):
         wandb.log({"param_count": config.param_count})
 
         # initialize the early_stopping object with a path for checkpoint
-        early_stopping = EarlyStopping(patience=config.patience, verbose=True, path='/home/eugenie/scratch/exp/pipeline_checkpoint.pt')
+        early_stopping = EarlyStopping(patience=config.patience, verbose=True, path=os.path.join(os.environ["fork_home"], 'exp/pipeline_checkpoint.pt'))
 
         # and use them to train the model
         model = training.train(model, voc, train_data, valid_data, criterion, optimizer, early_stopping, config, train_log)
