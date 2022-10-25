@@ -6,6 +6,7 @@ import yaml
 import wandb
 
 # os.environ["WANDB_DIR"] = os.environ["fork_home"] # Set wandb dir
+
 # Ignore warnings
 import warnings
 warnings.filterwarnings('ignore')
@@ -15,7 +16,7 @@ Training pipeline functions, integrating wandb
 '''
 
 # Load yaml file with arg
-qt_home = os.environ['queryteller_home']
+qt_home = os.environ['QUERYTELLER_HOME']
 setup_config = os.path.join(qt_home, "scripts/configs/seq2seq/", "cnn.yaml")
 print(setup_config)
 with open(setup_config) as f:
