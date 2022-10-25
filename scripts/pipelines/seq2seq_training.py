@@ -70,7 +70,7 @@ def model_pipeline(config=None):
         wandb.log({"param_count": config.param_count})
 
         # initialize the early_stopping object with a path for checkpoint
-        early_stopping = EarlyStopping(patience=config.patience, verbose=True, path=os.path.join(os.environ["fork_home"], 'exp/pipeline_checkpoint.pt'))
+        early_stopping = EarlyStopping(patience=config.patience, verbose=True, path=os.path.join(qt_home, 'checkpoints/pipeline_checkpoint.pt'))
 
         # and use them to train the model
         model = training.train(model, voc, train_data, valid_data, criterion, optimizer, early_stopping, config, train_log)
