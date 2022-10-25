@@ -1,0 +1,34 @@
+setup:
+    project: "hp-sweep"
+    if_aware: 1 # boolean
+    dataset: 'sqlshare' #sqlshr
+    template_min_count: null # sdss: 9, sqlshare: 3
+    proj_dir: ${QUERYTELLER_HOME}
+    data_dir:  ${QUERYTELLER_HOME}/data/
+    scripts_dir: ${QUERYTELLER_HOME}/scripts/models/
+    data_folder: model_data/seq/ 
+    sweep_config:
+        method: 'grid'
+        metric:
+            name: 'valid_loss'
+            goal: 'minimize'
+# Things we want to record in wandb
+constant:
+    if_aware:
+        value: null
+    problem: 
+        value: 'fragment' # 'fragment', 'template'
+    dataset:
+        value: null
+    device: 
+        value: null
+    epochs:
+        value: 20
+    patience:
+        value: 3
+    data_frac:
+        value: 0.1
+    V:
+        value: null
+    param_count:
+        value: null
