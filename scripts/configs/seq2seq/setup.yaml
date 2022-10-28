@@ -1,11 +1,11 @@
 setup:
-    project: "hp-sweep"
+    project: hp-sweep
     if_aware: 1 # boolean
-    dataset: 'sqlshare' #sqlshr
+    dataset: sqlshare #sqlshr
     template_min_count: null # sdss: 9, sqlshare: 3
-    proj_dir: ${QUERYTELLER_HOME}
-    data_dir:  ${QUERYTELLER_HOME}/data/
-    scripts_dir: ${QUERYTELLER_HOME}/scripts/models/
+    proj_dir: !ENV ${QUERYTELLER_HOME}
+    data_dir: !ENV ${QUERYTELLER_HOME}/data/
+    scripts_dir: !ENV ${QUERYTELLER_HOME}/scripts/models/
     data_folder: model_data/seq/ 
     sweep_config:
         method: 'grid'

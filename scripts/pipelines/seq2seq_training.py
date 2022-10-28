@@ -4,9 +4,10 @@ import gc
 import pprint
 import yaml
 import wandb
+from pyaml_env import parse_config
 
 # os.environ["WANDB_DIR"] = os.environ["fork_home"] # Set wandb dir
-
+print(os.environ["QUERYTELLER_HOME"])
 # Ignore warnings
 import warnings
 warnings.filterwarnings('ignore')
@@ -19,8 +20,9 @@ Training pipeline functions, integrating wandb
 qt_home = os.environ['QUERYTELLER_HOME']
 setup_config = os.path.join(qt_home, "scripts/configs/seq2seq/", "cnn.yaml")
 print(setup_config)
-with open(setup_config) as f:
-	setup_config = yaml.safe_load(f)
+#with open(setup_config) as f:
+#	setup_config = yaml.safe_load(f)
+setup_config = parse_config(setup_config)
 setup = setup_config['setup']
 hp_range = setup_config['range']
 hp_constant = setup_config['constant']
@@ -28,8 +30,9 @@ hp_constant['architecture']['value'] = setup['architecture']
 
 # Load setup yaml file to update configuration
 setup_config = os.path.join(qt_home, "scripts/configs/seq2seq/", "setup.yaml")
-with open(setup_config) as f:
-	setup_config = yaml.safe_load(f)
+#with open(setup_config) as f:
+#	setup_config = yaml.safe_load(f)
+setup_config = parse_config(setup_config)
 setup.update(setup_config['setup'])
 hp_constant.update(setup_config['constant'])
 
